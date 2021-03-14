@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', getTableContent);
 addSelectedButton.addEventListener('click', addSelected);
 loadDataButton.addEventListener('click', loadData);
 
+
+
+console.log(newDateString(0))
+
 function getData(inputData) {
     return fetch('https://ohipksnah8.execute-api.eu-north-1.amazonaws.com/dev', {
       method: 'POST',
@@ -82,7 +86,44 @@ async function loadData(event) {
 
     let dbReturn = await getData(jsonToSend)
     console.log( JSON.parse(dbReturn['body']) )
-    
+    dbReturn = JSON.parse(dbReturn['body'])
+
+
+
+    dataForChart = []
+    for (i = 0; i < dbReturn.length; i++)
+    {
+        currentDataset = []
+        console.log(dbReturn[i])
+        for (j = 0; j < dbReturn[i].length; j++)
+        {
+            point = {
+                x : dbReturn[i][j][1],
+                y : dbReturn[i][j][0]
+            }
+            currentDataset.push(point)
+        }
+        console.log(currentDataset)
+        dataForChart.push(currentDataset)
+    }
+    console.log(dataForChart)
+
+    config.data.datasets = []
+    var colorNames = Object.keys(window.chartColors);
+    for (i = 0; i < dataForChart.length; i++)
+    {
+        var colorName = colorNames[config.data.datasets.length % colorNames.length];
+		var newColor = window.chartColors[colorName];
+        var newDataset = {
+            label: selectedTable.options[i].text,
+            borderColor: newColor,
+            backgroundColor: color(newColor).alpha(0.5).rgbString(),
+            fill: false,
+            data: dataForChart[i],
+        };
+        config.data.datasets.push(newDataset);
+    }
+    window.myLine.update();
 }
 
 async function getTableContent(event) {
@@ -151,3 +192,4 @@ data = [[{
     y: 20
 }]]
 console.log(data)
+
