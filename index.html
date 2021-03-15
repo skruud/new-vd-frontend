@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>InstaGraph</title>
+  <link rel="stylesheet" href="./style.css">
   <script src="chart.min.js"></script>
   <script src="utils.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0"></script>
@@ -15,31 +16,37 @@
     <h1>Title</h1>
   </header>
 
-  <div style="width:75%;">
+  <div class="chart-div">
     <canvas id="canvas"></canvas>
   </div>
 
   <div class="post-container">
+    
     <ul class="post-list">
-        <select id="tableSelection"></select>
-        <select id="categoryTable" multiple></select>
-        <select id="locationTable" multiple></select>
-        <button id="addSelectedButton">Add</button>
-        <select id="selectedTable" multiple></select>
-        <button id="loadDataButton">Load</button>
+        <ul>
+            <select id="tableSelection"></select> 
+            <button id="addSelectedButton">Add selection to load table</button> 
+        </ul>
+            
+        <ul class="catlo-table">
+            <select id="categoryTable" multiple></select> 
+            <select id="locationTable" multiple></select>
+        </ul>    
+        <ul> </ul>
+        
+        <ul>
+            <select id="selectedTable" multiple></select>
+        </ul>
+        <ul>
+            <button id="removeSelectionButton">Remove selection</button>
+            <button id="clearTableButton">Clear table</button>
+            <button id="loadDataButton">Load data to chart</button>
+        </ul>
+        
     </ul>
     
     <script>
         var timeFormat = 'YYYY-MM-DD';
-
-        function newDate(days) {
-            return moment().add(days, 'd').toDate();
-        }
-
-        function newDateString(days) {
-            return moment().add(days, 'd').format(timeFormat);
-        }
-
         var color = Chart.helpers.color;
         var config = {
             type: 'line',
