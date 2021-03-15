@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', getTableContent);
 addSelectedButton.addEventListener('click', addSelected);
 loadDataButton.addEventListener('click', loadData);
+tableSelection.addEventListener('change', changeCategoryTable)
 
 
 
@@ -44,12 +45,52 @@ jsonTest = {
     ]
 }
 
+tableDict = {
+    "duration"  : "Ansettelsesform",
+    "form"      : "Heltid/deltid",
+    "industry"  : "Bransje",
+    "occupation": "Stilling",
+    "sector"    : "Sektor",
+    "role"      : "Lederkategori"
+}
+
 tableContentJSON = {
     "body": [
         {
         "type": "unique",
         "select": "category",
+        "from": "duration",
+        "where": "location = 'Norge'",
+        "order": "category"
+        }, {
+        "type": "unique",
+        "select": "category",
+        "from": "form",
+        "where": "location = 'Norge'",
+        "order": "category"
+        }, {
+        "type": "unique",
+        "select": "category",
+        "from": "industry",
+        "where": "location = 'Norge'",
+        "order": "category"
+        }, {
+        "type": "unique",
+        "select": "category",
         "from": "occupation",
+        "where": "location = 'Norge'",
+        "order": "category"
+        },
+        {
+        "type": "unique",
+        "select": "category",
+        "from": "sector",
+        "where": "location = 'Norge'",
+        "order": "category"
+        }, {
+        "type": "unique",
+        "select": "category",
+        "from": "role",
         "where": "location = 'Norge'",
         "order": "category"
         },
@@ -63,20 +104,29 @@ tableContentJSON = {
     ]
 }
 
+outputArrays = []
+
 async function loadData(event) {
     dataToSend = []
+
+    function getKeyByValue(object, value) { 
+        return Object.keys(object).find(key =>  
+                object[key] === value); 
+    }
+
     for (i = 0; i < selectedTable.options.length; i++)
     {
-        currentData = selectedTable.options[i].text.split(", ")
+        currentData = selectedTable.options[i].text.split(" | ")
         console.log(currentData)
         selectedData = {
             "type": "normal",
             "select": "amount, date",
-            "from": "occupation",
+            "from": getKeyByValue(tableDict, currentData[2]),
             "where": "location = '" + currentData[1] + "'"+
                      " AND category = '" + currentData[0] + "'",
             "order": "date"
         }
+        console.log(selectedData)
         dataToSend.push(selectedData)
     }
     
@@ -134,7 +184,16 @@ async function getTableContent(event) {
     //console.log( tableContentJSON['body'][1]['from'] )
     for(n = 0; n < outputArrays.length; n++)
     {
-        var currentTable = tableContentJSON['body'][n]['from']
+        var currentTable = tableContentJSON['body'][n]['select']
+
+        if (currentTable != "location")
+        {
+            var opt = document.createElement("option")
+            opt.innerHTML = tableDict[ tableContentJSON['body'][n]['from'] ]
+            //console.log(opt)
+            tableSelection.appendChild(opt)
+        }
+
         for (i = 0; i < outputArrays[n].length; i++)
         {
             var opt = document.createElement("option");
@@ -142,13 +201,10 @@ async function getTableContent(event) {
             opt.innerHTML = outputArrays[n][i]; 
 
             // then append it to the select element
-            if (currentTable == "occupation")
-            {
-                occupationTable.appendChild(opt);
-            } else
+            if (currentTable == "location")
             {
                 locationTable.appendChild(opt);
-            }
+            } 
             
         }
     } 
@@ -156,40 +212,30 @@ async function getTableContent(event) {
 
 async function addSelected(event) {
     //event.preventDefault();
-    var occupation = occupationTable.options[occupationTable.selectedIndex];
+    var category = categoryTable.options[categoryTable.selectedIndex];
     var location = locationTable.options[locationTable.selectedIndex];
+    var table = tableSelection.options[tableSelection.selectedIndex];
 
     var opt = document.createElement("option");
     //opt.value= i;
-    opt.innerHTML = occupation.text+", "+location.text; 
+    opt.innerHTML = category.text+" | "+location.text+" | "+table.text; 
 
     selectedTable.appendChild(opt)
-    selectedData = {
-        "type": "normal",
-        "select": "amount, date",
-        "from": "occupation",
-        "where": "location = '"+location.text+"'"+
-                 " AND category = '"+occupation.text+"'",
-        "order": "date"
-    }
-
-    console.log(selectedTable.options)
     
 }
 
-data = [[{
-    x: 10,
-    y: 20
-}, {
-    x: 15,
-    y: 10
-}],
-[{
-    x: 20,
-    y: 40
-}, {
-    x: 25,
-    y: 20
-}]]
-console.log(data)
-
+async function changeCategoryTable(event) {
+    tableData = outputArrays[tableSelection.options.selectedIndex]
+    console.log(categoryTable.options)
+    while (categoryTable.hasChildNodes())
+    {
+        categoryTable.options.remove(0)
+    }
+    for (i = 0; i < tableData.length; i++)
+    {
+        var opt = document.createElement("option");
+        //opt.value= i;
+        opt.innerHTML = tableData[i]; 
+        categoryTable.appendChild(opt);
+    }
+}
