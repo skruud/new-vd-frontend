@@ -3,10 +3,8 @@ document.addEventListener('DOMContentLoaded', getTableContent);
 addSelectedButton.addEventListener('click', addSelected);
 loadDataButton.addEventListener('click', loadData);
 tableSelection.addEventListener('change', changeCategoryTable)
-
-
-
-console.log(newDateString(0))
+removeSelectionButton.addEventListener('click', removeSelection);
+clearTableButton.addEventListener('click', clearTable);
 
 function getData(inputData) {
     return fetch('https://ohipksnah8.execute-api.eu-north-1.amazonaws.com/dev', {
@@ -208,6 +206,7 @@ async function getTableContent(event) {
             
         }
     } 
+    changeCategoryTable()
 }
 
 async function addSelected(event) {
@@ -237,5 +236,16 @@ async function changeCategoryTable(event) {
         //opt.value= i;
         opt.innerHTML = tableData[i]; 
         categoryTable.appendChild(opt);
+    }
+}
+
+async function removeSelection(event) {
+    selectedTable.options.remove(selectedTable.options.selectedIndex)
+}
+
+async function clearTable(event) {
+    while (selectedTable.hasChildNodes())
+    {
+        selectedTable.options.remove(0)
     }
 }
