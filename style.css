@@ -1,0 +1,46 @@
+.post-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .post-list {
+    min-width: 40rem;
+    list-style: none;
+  }
+
+
+#tableSelection {
+    background-color: lightblue;
+    color: black;
+    padding: 5px;
+    width: 45%;
+    text-align: left;
+}
+
+#categoryTable {
+    background-color: lightblue;
+    color: black;
+    padding: 5px;
+    width: 45%;
+    min-height: 10rem;
+    text-align: left;
+}
+
+#locationTable {
+    background-color: lightblue;
+    color: black;
+    padding: 5px;
+    width: 45%;
+    height: 10rem;
+    text-align: left;
+}
+
+#selectedTable {
+    background-color: lightblue;
+    color: black;
+    padding: 5px;
+    width: 90.5%;
+    height: 10rem;
+    text-align: left;
+}
