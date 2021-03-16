@@ -1,46 +1,94 @@
-.post-container {
+body {
+    background-color: lightgray;
+    color: white
+}
+
+Button:hover {
+    color: darkblue;
+    background: white;
+  }
+
+Option:hover {
+    background: white;
+}
+
+
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .post-list {
+  .container-list {
     min-width: 40rem;
     list-style: none;
   }
 
+.chart-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 80rem;
+    margin: auto;
+}
 
 #tableSelection {
-    background-color: lightblue;
     color: black;
     padding: 5px;
-    width: 45%;
+    margin-bottom: 2px;
+    width: 60%;
     text-align: left;
 }
 
 #categoryTable {
-    background-color: lightblue;
     color: black;
     padding: 5px;
-    width: 45%;
+    width: 60%;
     min-height: 10rem;
     text-align: left;
 }
 
 #locationTable {
-    background-color: lightblue;
     color: black;
     padding: 5px;
-    width: 45%;
+    width: 35%;
     height: 10rem;
     text-align: left;
 }
 
 #selectedTable {
-    background-color: lightblue;
     color: black;
     padding: 5px;
-    width: 90.5%;
+    width: 95.7%;
     height: 10rem;
     text-align: left;
+}
+
+Button {
+    padding: 5px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    text-align: center;
+    outline: none;
+}
+
+Select {
+    background-color: peachpuff;
+    outline: none;
+}
+
+#addSelectedButton {
+    width: 35%;
+}
+
+#removeSelectionButton {
+    width: 29.5%;
+}
+
+#clearTableButton {
+    width: 30%;
+}
+
+#loadDataButton {
+    width: 35%;
 }
