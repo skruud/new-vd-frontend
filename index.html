@@ -7,43 +7,45 @@
   <link rel="stylesheet" href="./style.css">
   <script src="chart.min.js"></script>
   <script src="utils.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
 </head>
 <body>
   
   <header>
-    <h1>Title</h1>
+    <hr>
   </header>
 
-  <div class="chart-div">
-    <canvas id="canvas"></canvas>
-  </div>
+  
 
-  <div class="post-container">
+  <div>
     
-    <ul class="post-list">
-        <ul>
-            <select id="tableSelection"></select> 
-            <button id="addSelectedButton">Add selection to load table</button> 
-        </ul>
-            
-        <ul class="catlo-table">
-            <select id="categoryTable" multiple></select> 
-            <select id="locationTable" multiple></select>
+    <div class="chart-div">
+        <canvas id="canvas"></canvas>
+    </div>
+    <hr>
+    <div class="container">
+
+        <ul class="container-list">
+            <li>
+                <select id="tableSelection"></select> 
+                <button id="addSelectedButton">Add selection to load table</button> 
+            </li>
+            <li>
+                <select id="categoryTable" multiple></select> 
+                <select id="locationTable" multiple></select>
+            </li>             
+            <li>
+                <select id="selectedTable" multiple></select>
+            </li>
+            <li>
+                <button id="removeSelectionButton">Remove selection</button>
+                <button id="clearTableButton">Clear table</button>
+                <button id="loadDataButton">Load data to chart</button>
+            </li>  
         </ul>    
-        <ul> </ul>
-        
-        <ul>
-            <select id="selectedTable" multiple></select>
-        </ul>
-        <ul>
-            <button id="removeSelectionButton">Remove selection</button>
-            <button id="clearTableButton">Clear table</button>
-            <button id="loadDataButton">Load data to chart</button>
-        </ul>
-        
-    </ul>
+    </div>
     
     <script>
         var timeFormat = 'YYYY-MM-DD';
@@ -60,20 +62,24 @@
                 scales: {
                     xAxes: [{
                         type: 'time',
+                        ticks: {
+                            maxTicksLimit: 12
+                        },
                         time: {
                             parser: timeFormat,
                             // round: 'day'
-                            tooltipFormat: 'll'
+                            tooltipFormat: 'll',
+                            unit: 'month'
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: 'Date'
+                            labelString: 'Dato'
                         }
                     }],
                     yAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: 'value'
+                            labelString: 'Antall annonser'
                         }
                     }]
                 },
