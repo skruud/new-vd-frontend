@@ -6,6 +6,7 @@ tableSelection.addEventListener('change', changeCategoryTable)
 removeSelectionButton.addEventListener('click', removeSelection);
 clearTableButton.addEventListener('click', clearTable);
 
+
 function getData(inputData) {
     return fetch('https://ohipksnah8.execute-api.eu-north-1.amazonaws.com/dev', {
       method: 'POST',
@@ -210,16 +211,22 @@ async function getTableContent(event) {
 }
 
 async function addSelected(event) {
-    //event.preventDefault();
-    var category = categoryTable.options[categoryTable.selectedIndex];
-    var location = locationTable.options[locationTable.selectedIndex];
-    var table = tableSelection.options[tableSelection.selectedIndex];
+    if (categoryTable.selectedIndex === -1 ||
+        locationTable.selectedIndex === -1) 
+    {
+        console.log('Invalid selection!')
+    } else {
+        var category = categoryTable.options[categoryTable.selectedIndex];
+        var location = locationTable.options[locationTable.selectedIndex];
+        var table = tableSelection.options[tableSelection.selectedIndex];
 
-    var opt = document.createElement("option");
-    //opt.value= i;
-    opt.innerHTML = category.text+" | "+location.text+" | "+table.text; 
+        var opt = document.createElement("option");
+        //opt.value= i;
+        opt.innerHTML = category.text+" | "+location.text+" | "+table.text; 
 
-    selectedTable.appendChild(opt)
+        selectedTable.appendChild(opt)
+    }
+    
     
 }
 
