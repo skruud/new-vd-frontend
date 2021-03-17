@@ -128,7 +128,6 @@ function prepareDataForChart(data) {
     for (i = 0; i < data.length; i++)
     {
         currentDataset = []
-        console.log(data[i])
         for (j = 0; j < data[i].length; j++)
         {
             point = {
@@ -137,7 +136,6 @@ function prepareDataForChart(data) {
             }
             currentDataset.push(point)
         }
-        console.log(currentDataset)
         dataForChart.push(currentDataset)
     }
     return dataForChart
