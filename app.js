@@ -24,26 +24,6 @@ function getData(inputData) {
     });
   }
 
-
-jsonTest = {
-    "body": [
-        {
-        "type": "unique",
-        "select": "category",
-        "from": "sector",
-        "where": "location = 'Oslo'",
-        "order": "category"
-        },
-        {
-        "type": "normal",
-        "select": "amount, date",
-        "from": "occupation",
-        "where": "location = 'Oslo' AND category = 'IT utvikling'",
-        "order": "date"
-        }
-    ]
-}
-
 tableDict = {
     "duration"  : "Ansettelsesform",
     "form"      : "Heltid/deltid",
@@ -134,29 +114,36 @@ async function loadData(event) {
     }
 
     let dbReturn = await getData(jsonToSend)
-    console.log( JSON.parse(dbReturn['body']) )
     dbReturn = JSON.parse(dbReturn['body'])
 
+    dataForChart = prepareDataForChart(dbReturn)
 
+    insertToChart(dataForChart)
 
+    
+}
+
+function prepareDataForChart(data) {
     dataForChart = []
-    for (i = 0; i < dbReturn.length; i++)
+    for (i = 0; i < data.length; i++)
     {
         currentDataset = []
-        console.log(dbReturn[i])
-        for (j = 0; j < dbReturn[i].length; j++)
+        console.log(data[i])
+        for (j = 0; j < data[i].length; j++)
         {
             point = {
-                x : dbReturn[i][j][1],
-                y : dbReturn[i][j][0]
+                x : data[i][j][1],
+                y : data[i][j][0]
             }
             currentDataset.push(point)
         }
         console.log(currentDataset)
         dataForChart.push(currentDataset)
     }
-    console.log(dataForChart)
+    return dataForChart
+}
 
+function insertToChart(data) {
     config.data.datasets = []
     var colorNames = Object.keys(window.chartColors);
     for (i = 0; i < dataForChart.length; i++)
