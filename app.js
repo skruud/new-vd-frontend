@@ -83,8 +83,6 @@ tableContentJSON = {
     ]
 }
 
-outputArrays = []
-
 async function loadData(event) {
     dataToSend = []
 
