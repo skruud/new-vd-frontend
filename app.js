@@ -210,7 +210,7 @@ async function getTableContent(event) {
     changeCategoryTable()
 }
 
-async function addSelected(event) {
+function addSelected(event) {
     if (categoryTable.selectedIndex === -1 ||
         locationTable.selectedIndex === -1) 
     {
@@ -230,7 +230,7 @@ async function addSelected(event) {
     
 }
 
-async function changeCategoryTable(event) {
+function changeCategoryTable(event) {
     tableData = outputArrays[tableSelection.options.selectedIndex]
     console.log(categoryTable.options)
     while (categoryTable.hasChildNodes())
@@ -246,11 +246,11 @@ async function changeCategoryTable(event) {
     }
 }
 
-async function removeSelection(event) {
+function removeSelection(event) {
     selectedTable.options.remove(selectedTable.options.selectedIndex)
 }
 
-async function clearTable(event) {
+function clearTable(event) {
     while (selectedTable.hasChildNodes())
     {
         selectedTable.options.remove(0)
